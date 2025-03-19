@@ -8,7 +8,7 @@ module "vpc" {
   mobile_tier_subnet_cidrs = var.mobile_tier_subnet_cidrs
   db_tier_subnet_cidr      = var.db_tier_subnet_cidr
   eks_subnet_cidrs         = var.eks_subnet_cidrs
-  availability_zones = var.availability_zones
+  availability_zones       = var.availability_zones
 }
 
 ##security groups##
@@ -55,9 +55,10 @@ module "db_security_group" {
 }
 
 module "eks_security_group" {
-  source = "/mnt/d/zinghr/Terraform/modules/eks_security_group"
-  vpc_id = module.vpc.vpc_id
-  bastion_sg_id = module.bastion_security_group.bastion_sg_id
+  source      = "/mnt/d/zinghr/Terraform/modules/eks_security_group"
+  vpc_id      = module.vpc.vpc_id
+  eks_sg_name = var.eks_sg_name
+  tags        = var.tags
 }
 
 ##keypair##
@@ -123,24 +124,46 @@ module "db_server" {
   ebs_volume_type   = var.ebs_volume_type
 }
 
+##EKS##
+module "eks_iam" {
+  source            = "/mnt/d/zinghr/Terraform/modules/eks_iam"
+  cluster_role_name = var.cluster_role_name
+  node_role_name    = var.node_role_name
+}
+
+module "eks_cluster" {
+  source                = "/mnt/d/zinghr/Terraform/modules/eks_cluster"
+  cluster_name          = var.cluster_name
+  cluster_role_arn      = module.eks_iam.cluster_role_arn
+  node_role_arn         = module.eks_iam.node_role_arn
+  eks_subnet_ids        = module.vpc.eks_subnet_ids
+  eks_security_group_id = module.eks_security_group.eks_security_group_id
+  k8s_version           = var.k8s_version
+  desired_capacity      = var.desired_capacity
+  max_capacity          = var.max_capacity
+  min_capacity          = var.min_capacity
+  eks_instance_types    = var.eks_instance_types
+  tags                  = var.tags
+}
+
 ##alb##
 module "webapp_alb" {
-  source          = "/mnt/d/zinghr/Terraform/modules/webapp_alb"
-  vpc_id          = module.vpc.vpc_id
-  webapp_alb_name = var.webapp_alb_name
-  subnet_ids      = module.vpc.web_tier_subnet_ids
-  webapp_alb_sg_id = module.webapp_alb_security_group.webapp_alb_sg_id
+  source              = "/mnt/d/zinghr/Terraform/modules/webapp_alb"
+  vpc_id              = module.vpc.vpc_id
+  webapp_alb_name     = var.webapp_alb_name
+  subnet_ids          = module.vpc.web_tier_subnet_ids
+  webapp_alb_sg_id    = module.webapp_alb_security_group.webapp_alb_sg_id
   webapp_instance_ids = module.web_app.webapp_instance_ids
   #certificate_arn        = var.certificate_arn
 }
 
 
 module "mobileapp_alb" {
-  source             = "/mnt/d/zinghr/Terraform/modules/mobileapp_alb"
-  vpc_id             = module.vpc.vpc_id
-  mobileapp_alb_name = var.mobileapp_alb_name
-  subnet_ids         = module.vpc.mobile_tier_subnet_ids
-  mobileapp_instance_ids  = module.mobile_app.mobileapp_instance_ids
-  mobileapp_alb_sg_id = module.mobileapp_alb_security_group.mobileapp_alb_sg_id
+  source                 = "/mnt/d/zinghr/Terraform/modules/mobileapp_alb"
+  vpc_id                 = module.vpc.vpc_id
+  mobileapp_alb_name     = var.mobileapp_alb_name
+  subnet_ids             = module.vpc.mobile_tier_subnet_ids
+  mobileapp_instance_ids = module.mobile_app.mobileapp_instance_ids
+  mobileapp_alb_sg_id    = module.mobileapp_alb_security_group.mobileapp_alb_sg_id
   #certificate_arn        = var.certificate_arn
 }

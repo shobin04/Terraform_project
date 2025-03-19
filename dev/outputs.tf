@@ -18,9 +18,9 @@ output "db_tier_subnet_id" {
   value = module.vpc.db_tier_subnet_id
 }
 
-# output "eks_subnet_ids" {
-#   value = module.vpc.eks_id
-# }
+output "eks_subnet_ids" {
+  value = module.vpc.eks_subnet_ids
+}
 
 output "webapp_instance_ids" {
   value = module.web_app.webapp_instance_ids
@@ -115,4 +115,29 @@ output "mobileapp_alb_zone_id" {
 output "mobile_target_group_arn" {
   description = "ARN of the Mobile Tier Target Group"
   value       = module.mobileapp_alb.mobile_target_group_arn
+}
+
+output "cluster_id" {
+  description = "The EKS cluster ID"
+  value       = module.eks_cluster.cluster_id
+}
+
+output "cluster_endpoint" {
+  description = "The endpoint for the EKS cluster"
+  value       = module.eks_cluster.cluster_endpoint
+}
+
+output "cluster_version" {
+  description = "The Kubernetes version for the cluster"
+  value       = module.eks_cluster.cluster_version
+}
+
+output "node_group_arn" {
+  description = "ARN of the worker node group"
+  value       = module.eks_cluster.node_group_arn
+}
+
+output "eks_security_group_id" {
+  description = "The ID of the EKS security group"
+  value       = module.eks_security_group.eks_security_group_id
 }
