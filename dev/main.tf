@@ -1,6 +1,6 @@
 ##vpc##
 module "vpc" {
-  source                   = "/mnt/d/zinghr/Terraform/modules/vpc"
+  source                   = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/vpc"
   vpc_name                 = var.vpc_name
   cidr_block               = var.cidr_block
   public_subnet_cidrs      = var.public_subnet_cidrs
@@ -13,25 +13,25 @@ module "vpc" {
 
 ##security groups##
 module "webapp_alb_security_group" {
-  source             = "/mnt/d/zinghr/Terraform/modules/webapp_alb_security_group"
+  source             = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/webapp_alb_security_group"
   vpc_id             = module.vpc.vpc_id
   webapp_alb_sg_name = var.webapp_alb_sg_name
 }
 
 module "mobileapp_alb_security_group" {
-  source                = "/mnt/d/zinghr/Terraform/modules/mobileapp_alb_security_group"
+  source                = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/mobileapp_alb_security_group"
   vpc_id                = module.vpc.vpc_id
   mobileapp_alb_sg_name = var.mobileapp_alb_sg_name
 }
 
 module "bastion_security_group" {
-  source          = "/mnt/d/zinghr/Terraform/modules/bastion_security_group"
+  source          = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/bastion_security_group"
   vpc_id          = module.vpc.vpc_id
   bastion_sg_name = var.bastion_sg_name
 }
 
 module "webapp_security_group" {
-  source           = "/mnt/d/zinghr/Terraform/modules/webapp_security_group"
+  source           = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/webapp_security_group"
   vpc_id           = module.vpc.vpc_id
   webapp_sg_name   = var.webapp_sg_name
   bastion_sg_id    = module.bastion_security_group.bastion_sg_id
@@ -39,7 +39,7 @@ module "webapp_security_group" {
 }
 
 module "mobileapp_security_group" {
-  source              = "/mnt/d/zinghr/Terraform/modules/mobileapp_security_group"
+  source              = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/mobileapp_security_group"
   vpc_id              = module.vpc.vpc_id
   bastion_sg_id       = module.bastion_security_group.bastion_sg_id
   mobileapp_sg_name   = var.mobileapp_sg_name
@@ -47,7 +47,7 @@ module "mobileapp_security_group" {
 }
 
 module "db_security_group" {
-  source        = "/mnt/d/zinghr/Terraform/modules/db_server_security_group"
+  source        = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/db_server_security_group"
   vpc_id        = module.vpc.vpc_id
   bastion_sg_id = module.bastion_security_group.bastion_sg_id
   db_sg_name    = var.db_sg_name
@@ -55,14 +55,14 @@ module "db_security_group" {
 }
 
 module "eks_security_group" {
-  source      = "/mnt/d/zinghr/Terraform/modules/eks_security_group"
+  source      = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/eks_security_group"
   vpc_id      = module.vpc.vpc_id
   eks_sg_name = var.eks_sg_name
   tags        = var.tags
 }
 
 module "elasticache_security_group" {
-  source              = "/mnt/d/zinghr/Terraform/modules/elasticache_security_group"
+  source              = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/elasticache_security_group"
   vpc_id              = module.vpc.vpc_id
   elasticache_sg_name = var.elasticache_sg_name
   webapp_sg_id        = module.webapp_security_group.webapp_sg_id
@@ -70,13 +70,13 @@ module "elasticache_security_group" {
 
 ##keypair##
 module "key_pair" {
-  source   = "/mnt/d/zinghr/Terraform/modules/keypair"
+  source   = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/keypair"
   key_name = var.key_name
 }
 
 ##bastion server##
 module "bastion" {
-  source                = "/mnt/d/zinghr/Terraform/modules/bastion_server"
+  source                = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/bastion_server"
   bastion_ami           = var.bastion_ami
   bastion_instance_type = var.bastion_instance_type
   bastion_name          = var.bastion_name
@@ -88,7 +88,7 @@ module "bastion" {
 
 ##webapp server##
 module "web_app" {
-  source                = "/mnt/d/zinghr/Terraform/modules/webapp_server"
+  source                = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/webapp_server"
   webapp_instance_count = var.webapp_instance_count
   webapp_ami            = var.webapp_ami
   webapp_instance_type  = var.webapp_instance_type
@@ -102,7 +102,7 @@ module "web_app" {
 
 ##mobileapp server##
 module "mobile_app" {
-  source                   = "/mnt/d/zinghr/Terraform/modules/mobileapp_server"
+  source                   = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/mobileapp_server"
   mobileapp_instance_count = var.mobileapp_instance_count
   mobileapp_ami            = var.mobileapp_ami
   mobileapp_instance_type  = var.mobileapp_instance_type
@@ -116,7 +116,7 @@ module "mobile_app" {
 
 ##db server##
 module "db_server" {
-  source            = "/mnt/d/zinghr/Terraform/modules/db_server"
+  source            = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/db_server"
   db_instance_count = var.db_instance_count
   db_ami            = var.db_ami
   db_instance_type  = var.db_instance_type
@@ -133,13 +133,13 @@ module "db_server" {
 
 ##EKS##
 module "eks_iam" {
-  source            = "/mnt/d/zinghr/Terraform/modules/eks_iam"
+  source            = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/eks_iam"
   cluster_role_name = var.cluster_role_name
   node_role_name    = var.node_role_name
 }
 
 module "eks_cluster" {
-  source                = "/mnt/d/zinghr/Terraform/modules/eks_cluster"
+  source                = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/eks_cluster"
   cluster_name          = var.cluster_name
   cluster_role_arn      = module.eks_iam.cluster_role_arn
   node_role_arn         = module.eks_iam.node_role_arn
@@ -155,7 +155,7 @@ module "eks_cluster" {
 
 ##alb##
 module "webapp_alb" {
-  source              = "/mnt/d/zinghr/Terraform/modules/webapp_alb"
+  source              = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/webapp_alb"
   vpc_id              = module.vpc.vpc_id
   webapp_alb_name     = var.webapp_alb_name
   subnet_ids          = module.vpc.web_tier_subnet_ids
@@ -166,7 +166,7 @@ module "webapp_alb" {
 
 
 module "mobileapp_alb" {
-  source                 = "/mnt/d/zinghr/Terraform/modules/mobileapp_alb"
+  source                 = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/mobileapp_alb"
   vpc_id                 = module.vpc.vpc_id
   mobileapp_alb_name     = var.mobileapp_alb_name
   subnet_ids             = module.vpc.mobile_tier_subnet_ids
@@ -177,7 +177,7 @@ module "mobileapp_alb" {
 
 ## ElastiCache Cluster ##
 module "elasticache" {
-  source                = "/mnt/d/zinghr/Terraform/modules/elasticache"
+  source                = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/elasticache"
   elasticache_engine    = var.elasticache_engine
   elasticache_version   = var.elasticache_version
   elasticache_node_type = var.elasticache_node_type
