@@ -5,8 +5,8 @@ public_subnet_cidrs      = ["10.0.1.0/24"]
 web_tier_subnet_cidrs    = ["10.0.2.0/24", "10.0.3.0/24", "10.0.4.0/24"]
 mobile_tier_subnet_cidrs = ["10.0.5.0/24", "10.0.6.0/24", "10.0.7.0/24"]
 db_tier_subnet_cidr      = "10.0.8.0/24"
-# eks_subnet_cidrs = ["10.0.9.0/24", "10.0.10.0/24", "10.0.11.0/24"]
-availability_zones = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
+eks_subnet_cidrs         = ["10.0.9.0/24", "10.0.10.0/24", "10.0.11.0/24"]
+availability_zones       = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
 
 ##security group##
 bastion_sg_name       = "windows-bastion-sg"
@@ -15,6 +15,7 @@ mobileapp_sg_name     = "mobileapp-sg"
 db_sg_name            = "sql-db-sg"
 webapp_alb_sg_name    = "web-alb"
 mobileapp_alb_sg_name = "mobile-alb"
+eks_sg_name           = "eks-sg"
 
 ##keypair##
 key_name = "zinghr"
@@ -80,7 +81,21 @@ ebs_device_name   = "/dev/sdf"
 ebs_volume_size   = "100"
 ebs_volume_type   = "gp3"
 
+##EKS##
+cluster_name       = "my-eks"
+cluster_role_name  = "eks-cluster-role"
+node_role_name     = "eks-node-role"
+k8s_version        = "1.27"
+eks_instance_types = ["t3.medium"]
+desired_capacity   = 2
+max_capacity       = 3
+min_capacity       = 1
+tags = {
+  Environment = "Dev"
+}
+
+
 ##alb##
-webapp_alb_name = "webapp-alb"
+webapp_alb_name    = "webapp-alb"
 mobileapp_alb_name = "mobileapp-alb"
 
