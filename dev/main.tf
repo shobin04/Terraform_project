@@ -61,6 +61,13 @@ module "eks_security_group" {
   tags        = var.tags
 }
 
+module "elasticache_security_group" {
+  source              = "/mnt/d/zinghr/Terraform/modules/elasticache_security_group"
+  vpc_id              = module.vpc.vpc_id
+  elasticache_sg_name = var.elasticache_sg_name
+  webapp_sg_id        = module.webapp_security_group.webapp_sg_id
+}
+
 ##keypair##
 module "key_pair" {
   source   = "/mnt/d/zinghr/Terraform/modules/keypair"
@@ -167,3 +174,22 @@ module "mobileapp_alb" {
   mobileapp_alb_sg_id    = module.mobileapp_alb_security_group.mobileapp_alb_sg_id
   #certificate_arn        = var.certificate_arn
 }
+
+## ElastiCache Cluster ##
+module "elasticache" {
+  source                = "/mnt/d/zinghr/Terraform/modules/elasticache"
+  elasticache_engine    = var.elasticache_engine
+  elasticache_version   = var.elasticache_version
+  elasticache_node_type = var.elasticache_node_type
+  num_cache_nodes       = var.num_cache_nodes
+  elasticache_subnet_id = module.vpc.db_tier_subnet_id
+  elasticache_sg_id     = module.elasticache_security_group.elasticache_sg_id
+  elasticache_cluster_id = var.elasticache_cluster_id
+  elasticache_port      = var.elasticache_port
+}
+
+
+
+
+
+

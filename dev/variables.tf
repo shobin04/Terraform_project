@@ -250,3 +250,49 @@ variable "node_role_name" {
 variable "eks_sg_name" {
   type = string
 }
+
+
+##elasticache##
+
+## Subnets ##
+variable "elasticache_subnet_cidr" {
+  description = "ElastiCache subnet CIDR values"
+  type        = string
+}
+
+## ElastiCache ##
+
+variable "elasticache_engine" {
+  description = "The engine to use for ElastiCache (e.g., redis or memcached)"
+  type        = string
+}
+
+variable "elasticache_version" {
+  description = "The version of the ElastiCache engine"
+  type        = string
+}
+
+variable "elasticache_node_type" {
+  description = "The instance type for ElastiCache nodes"
+  type        = string
+}
+
+variable "num_cache_nodes" {
+  description = "The number of cache nodes (1 for Redis, multiple for Memcached)"
+  type        = number
+}
+
+variable "elasticache_sg_name" {
+  description = "The name of the ElastiCache security group"
+  type        = string
+}
+
+variable "elasticache_cluster_id" {
+  description = "The ID of the ElastiCache cluster"
+  type        = string
+}
+
+variable "elasticache_port" {
+  description = "The port on which ElastiCache will listen (6379 for Redis, 11211 for Memcached)"
+  type        = number
+}
