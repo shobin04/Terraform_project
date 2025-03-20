@@ -15,7 +15,7 @@ mobileapp_sg_name     = "mobileapp-sg"
 db_sg_name            = "sql-db-sg"
 webapp_alb_sg_name    = "web-alb"
 mobileapp_alb_sg_name = "mobile-alb"
-elasticache_sg_name = "redis-sg"
+elasticache_sg_name   = "redis-sg"
 eks_sg_name           = "eks-sg"
 
 ##keypair##
@@ -101,12 +101,14 @@ webapp_alb_name    = "webapp-alb"
 mobileapp_alb_name = "mobileapp-alb"
 
 ## ElastiCache ##
-elasticache_engine    = "redis"  # Change to "memcached" if needed
-elasticache_version   = "7"    # Specify the version (e.g., 7.x for Redis, 1.x for Memcached)
-elasticache_node_type = "cache.t3.small"
-num_cache_nodes       = 1  # 1 for Redis, can be more for Memcached
-elasticache_cluster_id = "redis-cluster"
-elasticache_port      = 6380  
-elasticache_subnet_cidr = "10.0.2.0/24"
+cache_engine            = "redis"
+cache_engine_version    = "7"
+cache_node_type         = "cache.t3.small"
+cache_node_count        = 1
+cache_cluster_id        = "redis-cluster"
+cache_port              = 6380
+cache_parameter_group   = "default.redis7"
+cache_name              = "redis-cache"
+cache_subnet_group_name = "redis-subnet-group"
 
 

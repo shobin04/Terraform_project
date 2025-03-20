@@ -70,6 +70,21 @@ resource "aws_subnet" "eks" {
   }
 }
 
+##elasticache-subnet##
+resource "aws_subnet" "elasticache" {
+  count      = length(var.availability_zones)
+  vpc_id     = aws_vpc.main.id
+  cidr_block = element(var.elasticache_subnet_cidrs, count.index)
+
+  map_public_ip_on_launch = false
+  availability_zone       = element(var.availability_zones, count.index)
+  
+  tags = {
+    Name = "elasticache-subnet-${count.index + 1}"
+  }
+}
+
+
 ## igw ##
 resource "aws_internet_gateway" "my_igw" {
   vpc_id = aws_vpc.main.id

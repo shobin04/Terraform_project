@@ -117,23 +117,23 @@ output "mobile_target_group_arn" {
   value       = module.mobileapp_alb.mobile_target_group_arn
 }
 
-output "elasticache_subnet_id" {
-  value = module.vpc.elasticache_subnet_id
+output "cache_subnet_id" {
+  value = module.vpc.cache_subnet_id
 }
 
-output "elasticache_cluster_id" {
+output "cache_cluster_id" {
   description = "The ID of the ElastiCache cluster"
-  value       = module.elasticache.elasticache_cluster_id
+  value       = module.elasticache.cache_cluster_id
 }
 
-output "elasticache_endpoint" {
+output "cache_endpoint" {
   description = "The primary endpoint of the ElastiCache cluster"
-  value       = module.elasticache.elasticache_endpoint
+  value       = module.elasticache.cache_endpoint
 }
 
-output "elasticache_sg_id" {
+output "cache_sg_id" {
   description = "The security group ID for ElastiCache"
-  value       = module.elasticache_security_group.elasticache_sg_id
+  value       = module.elasticache_security_group.cache_sg_id
 }
 
 output "cluster_id" {

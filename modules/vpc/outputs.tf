@@ -37,3 +37,13 @@ output "public_route_table_id" {
 output "private_route_table_id" {
   value = aws_route_table.private_rt.id
 }
+
+output "elasticache_subnet_id" {
+  value = aws_subnet.db_tier.id  # Or aws_subnet.web_tier[0].id
+}
+
+output "cache_subnet_id" {
+  description = "ID of the cache subnet group"
+  value       = aws_subnet.cache_subnet.id  # Ensure this resource exists in your VPC module
+}
+

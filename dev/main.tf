@@ -61,11 +61,12 @@ module "eks_security_group" {
   tags        = var.tags
 }
 
-module "elasticache_security_group" {
-  source              = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/elasticache_security_group"
+module "elasticache_sg" {
+  source              = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/elasticache_sg"
   vpc_id              = module.vpc.vpc_id
   elasticache_sg_name = var.elasticache_sg_name
   webapp_sg_id        = module.webapp_security_group.webapp_sg_id
+  cache_port          = var.cache_port
 }
 
 ##keypair##
@@ -175,18 +176,22 @@ module "mobileapp_alb" {
   #certificate_arn        = var.certificate_arn
 }
 
-## ElastiCache Cluster ##
+
 module "elasticache" {
-  source                = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/elasticache"
-  elasticache_engine    = var.elasticache_engine
-  elasticache_version   = var.elasticache_version
-  elasticache_node_type = var.elasticache_node_type
-  num_cache_nodes       = var.num_cache_nodes
-  elasticache_subnet_id = module.vpc.db_tier_subnet_id
-  elasticache_sg_id     = module.elasticache_security_group.elasticache_sg_id
-  elasticache_cluster_id = var.elasticache_cluster_id
-  elasticache_port      = var.elasticache_port
+  source                  = "C:/Users/CLOPS_ADARSH_TP/Downloads/Zinghr/Terraform_project/modules/elasticache"
+  cache_engine            = var.cache_engine
+  cache_engine_version    = var.cache_engine_version
+  cache_node_type         = var.cache_node_type
+  cache_node_count        = var.cache_node_count
+  cache_cluster_id        = var.cache_cluster_id
+  cache_port              = var.cache_port
+  cache_parameter_group   = var.cache_parameter_group
+  cache_subnet_group_name = var.cache_subnet_group_name
+  cache_subnet_ids        = module.vpc.elasticache_subnet_ids
+  cache_name              = var.cache_name
+  cache_sg_id             = module.elasticache_sg.security_group_id
 }
+
 
 
 

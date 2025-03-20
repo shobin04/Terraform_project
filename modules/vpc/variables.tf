@@ -39,3 +39,8 @@ variable "availability_zones" {
   description = "Availability zone for subnets"
   type        = list(string)
 }
+
+
+variable "elasticache_subnet_cidrs" {
+  type    = list(string)
+}
