@@ -8,6 +8,7 @@ module "vpc" {
   mobile_tier_subnet_cidrs = var.mobile_tier_subnet_cidrs
   db_tier_subnet_cidr      = var.db_tier_subnet_cidr
   eks_subnet_cidrs         = var.eks_subnet_cidrs
+  redis_subnet_cidrs       = var.redis_subnet_cidrs
   availability_zones       = var.availability_zones
 }
 
@@ -59,6 +60,12 @@ module "eks_security_group" {
   vpc_id      = module.vpc.vpc_id
   eks_sg_name = var.eks_sg_name
   tags        = var.tags
+}
+
+module "redis_security_group" {
+  source        = "/mnt/d/zinghr/Terraform/modules/redis_cache_security_group"
+  redis_sg_name = var.redis_sg_name
+  vpc_id        = module.vpc.vpc_id
 }
 
 ##keypair##
@@ -131,6 +138,7 @@ module "eks_iam" {
   node_role_name    = var.node_role_name
 }
 
+##eks cluster##
 module "eks_cluster" {
   source                = "/mnt/d/zinghr/Terraform/modules/eks_cluster"
   cluster_name          = var.cluster_name
@@ -144,6 +152,20 @@ module "eks_cluster" {
   min_capacity          = var.min_capacity
   eks_instance_types    = var.eks_instance_types
   tags                  = var.tags
+}
+
+##redis cache##
+module "redis_cache" {
+  source               = "/mnt/d/zinghr/Terraform/modules/redis_cache"
+  redis_name           = var.redis_name
+  cluster_id           = var.cluster_id
+  engine_version       = var.engine_version
+  node_type            = var.node_type
+  num_cache_nodes      = var.num_cache_nodes
+  parameter_group_name = var.parameter_group_name
+  security_group_ids   = [module.redis_security_group.redis_sg_id]
+  redis_subnet_ids     = module.vpc.redis_subnet_ids
+  subnet_group_name    = var.subnet_group_name
 }
 
 ##alb##

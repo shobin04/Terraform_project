@@ -141,3 +141,22 @@ output "eks_security_group_id" {
   description = "The ID of the EKS security group"
   value       = module.eks_security_group.eks_security_group_id
 }
+
+output "redis_subnet_ids" {
+  description = "Redis subnet IDs from the Redis module"
+  value       = module.vpc.redis_subnet_ids
+}
+output "redis_sg_id" {
+  description = "Redis security group ID from the Redis module"
+  value       = module.redis_security_group.redis_sg_id
+}
+
+output "redis_endpoint" {
+  description = "Redis endpoint address from the Redis module"
+  value       = module.redis_cache.redis_endpoint
+}
+
+output "redis_port" {
+  description = "Redis endpoint port from the Redis module"
+  value       = module.redis_cache.redis_port
+}
