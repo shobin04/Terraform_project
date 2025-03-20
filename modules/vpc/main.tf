@@ -57,20 +57,20 @@ resource "aws_subnet" "db_tier" {
   }
 }
 
-#eks subnets##
-resource "aws_subnet" "eks" {
-  count      = length(var.availability_zones)
-  vpc_id     = aws_vpc.main.id
-  cidr_block = element(var.eks_subnet_cidrs, count.index)
+##eks subnets##
+# resource "aws_subnet" "eks" {
+#   count      = length(var.availability_zones)
+#   vpc_id     = aws_vpc.main.id
+#   cidr_block = element(var.eks_subnet_cidrs, count.index)
 
-  map_public_ip_on_launch = false
-  availability_zone       = element(var.availability_zones, count.index)
-  tags = {
-    Name = "eks-subnet-${count.index + 1}"
-  }
-}
+#   map_public_ip_on_launch = false
+#   availability_zone       = element(var.availability_zones, count.index)
+#   tags = {
+#     Name = "eks-subnet-${count.index + 1}"
+#   }
+# }
 
-##elasticache-subnet##
+##elasticache subnet##
 resource "aws_subnet" "elasticache" {
   count      = length(var.availability_zones)
   vpc_id     = aws_vpc.main.id
@@ -155,8 +155,8 @@ resource "aws_route_table_association" "db_tier" {
   route_table_id = aws_route_table.private_rt.id
 }
 
-resource "aws_route_table_association" "eks" {
-  count          = length(aws_subnet.eks)
-  subnet_id      = aws_subnet.eks[count.index].id
-  route_table_id = aws_route_table.private_rt.id
-}
+# resource "aws_route_table_association" "eks" {
+#   count          = length(aws_subnet.eks)
+#   subnet_id      = aws_subnet.eks[count.index].id
+#   route_table_id = aws_route_table.private_rt.id
+# }

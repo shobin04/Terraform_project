@@ -30,16 +30,15 @@ variable "db_tier_subnet_cidr" {
   type        = string
 }
 
-variable "eks_subnet_cidrs" {
-  description = "eks subnet CIDR values"
-  type        = list(string)
-}
+# variable "eks_subnet_cidrs" {
+#   description = "eks subnet CIDR values"
+#   type        = list(string)
+# }
 
 variable "availability_zones" {
   description = "Availability zone for subnets"
   type        = list(string)
 }
-
 
 variable "elasticache_subnet_cidrs" {
   type    = list(string)

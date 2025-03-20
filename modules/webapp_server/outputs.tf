@@ -1,4 +1,3 @@
 output "webapp_instance_ids" {
-  description = "List of WebApp instance IDs"
-  value       = [for instance in aws_instance.webapp : instance.id]
+  value = aws_instance.webapp[*].id
 }

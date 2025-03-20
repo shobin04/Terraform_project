@@ -1,16 +1,16 @@
-output "mobileapp_alb_arn" {
+output "alb_arn" {
   description = "ARN of the ALB"
-  value       = aws_lb.mobileapp_alb.arn
+  value       = aws_lb.alb.arn
 }
 
-output "mobileapp_alb_dns_name" {
+output "alb_dns_name" {
   description = "DNS name of the ALB"
-  value       = aws_lb.mobileapp_alb.dns_name
+  value       = aws_lb.alb.dns_name
 }
 
-output "mobileapp_alb_zone_id" {
+output "alb_zone_id" {
   description = "Zone ID of the ALB"
-  value       = aws_lb.mobileapp_alb.zone_id
+  value       = aws_lb.alb.zone_id
 }
 
 output "mobile_target_group_arn" {

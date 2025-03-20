@@ -22,8 +22,3 @@ variable "webapp_alb_sg_id" {
 #   description = "ARN of the SSL certificate for HTTPS listener"
 #   type        = string
 # }
-
-variable "webapp_instance_ids" {
-  description = "List of Web App instance IDs to attach to the target group"
-  type        = list(string)
-}

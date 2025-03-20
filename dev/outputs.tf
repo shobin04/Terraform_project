@@ -18,9 +18,9 @@ output "db_tier_subnet_id" {
   value = module.vpc.db_tier_subnet_id
 }
 
-output "eks_subnet_ids" {
-  value = module.vpc.eks_subnet_ids
-}
+# output "eks_subnet_ids" {
+#   value = module.vpc.eks_id
+# }
 
 output "webapp_instance_ids" {
   value = module.web_app.webapp_instance_ids
@@ -30,7 +30,7 @@ output "webapp_sg_id" {
   value = module.webapp_security_group.webapp_sg_id
 }
 
-output "mobileapp_instance_ids" {
+output "mobileapp_instance_ids_from_module" {
   value = module.mobile_app.mobileapp_instance_ids
 }
 
@@ -71,92 +71,3 @@ output "mobileapp_alb_security_group_id" {
   value       = module.mobileapp_alb_security_group.mobileapp_alb_sg_id
 }
 
-output "webapp_alb_arn" {
-  description = "ARN of the WebApp ALB"
-  value       = module.webapp_alb.webapp_alb_arn
-}
-
-output "webapp_alb_dns_name" {
-  description = "DNS name of the WebApp ALB"
-  value       = module.webapp_alb.webapp_alb_dns_name
-}
-
-output "webapp_alb_zone_id" {
-  description = "Zone ID of the WebApp ALB"
-  value       = module.webapp_alb.webapp_alb_zone_id
-}
-
-output "webapp_target_group_arn" {
-  description = "ARN of the WebApp Target Group"
-  value       = module.webapp_alb.webapp_target_group_arn
-}
-
-# Uncomment if HTTPS listener is added
-# output "webapp_https_listener_arn" {
-#   description = "ARN of the WebApp HTTPS listener"
-#   value       = module.webapp_alb.webapp_https_listener_arn
-# }
-
-output "mobileapp_alb_arn" {
-  description = "ARN of the Mobile App ALB"
-  value       = module.mobileapp_alb.mobileapp_alb_arn
-}
-
-output "mobileapp_alb_dns_name" {
-  description = "DNS name of the Mobile App ALB"
-  value       = module.mobileapp_alb.mobileapp_alb_dns_name
-}
-
-output "mobileapp_alb_zone_id" {
-  description = "Zone ID of the Mobile App ALB"
-  value       = module.mobileapp_alb.mobileapp_alb_zone_id
-}
-
-output "mobile_target_group_arn" {
-  description = "ARN of the Mobile Tier Target Group"
-  value       = module.mobileapp_alb.mobile_target_group_arn
-}
-
-output "cache_subnet_id" {
-  value = module.vpc.cache_subnet_id
-}
-
-output "cache_cluster_id" {
-  description = "The ID of the ElastiCache cluster"
-  value       = module.elasticache.cache_cluster_id
-}
-
-output "cache_endpoint" {
-  description = "The primary endpoint of the ElastiCache cluster"
-  value       = module.elasticache.cache_endpoint
-}
-
-output "cache_sg_id" {
-  description = "The security group ID for ElastiCache"
-  value       = module.elasticache_security_group.cache_sg_id
-}
-
-output "cluster_id" {
-  description = "The EKS cluster ID"
-  value       = module.eks_cluster.cluster_id
-}
-
-output "cluster_endpoint" {
-  description = "The endpoint for the EKS cluster"
-  value       = module.eks_cluster.cluster_endpoint
-}
-
-output "cluster_version" {
-  description = "The Kubernetes version for the cluster"
-  value       = module.eks_cluster.cluster_version
-}
-
-output "node_group_arn" {
-  description = "ARN of the worker node group"
-  value       = module.eks_cluster.node_group_arn
-}
-
-output "eks_security_group_id" {
-  description = "The ID of the EKS security group"
-  value       = module.eks_security_group.eks_security_group_id
-}

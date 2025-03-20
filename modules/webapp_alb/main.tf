@@ -1,7 +1,6 @@
-# Application Load Balancer for WebApp
-resource "aws_lb" "webapp_alb" {
+resource "aws_lb" "alb" {
   name               = var.webapp_alb_name
-  internal           = true
+  internal           = false
   load_balancer_type = "application"
   security_groups    = [var.webapp_alb_sg_id]
   subnets            = var.subnet_ids
@@ -13,8 +12,8 @@ resource "aws_lb" "webapp_alb" {
   }
 }
 
-# Target Group for WebApp
-resource "aws_lb_target_group" "webapp_tg" {
+# Target Group for Web Tier
+resource "aws_lb_target_group" "web_tg" {
   name     = "${var.webapp_alb_name}-web-tg"
   port     = 80
   protocol = "HTTP"
@@ -30,26 +29,26 @@ resource "aws_lb_target_group" "webapp_tg" {
   }
 
   tags = {
-    Name = "webapp-target-group"
+    Name = "web-target-group"
   }
 }
 
 # Register Web App Instances with the Target Group
-resource "aws_lb_target_group_attachment" "webapp_tg_attachment" {
-  count            = length(var.webapp_instance_ids)
-  target_group_arn = aws_lb_target_group.webapp_tg.arn
-  target_id        = var.webapp_instance_ids[count.index]
+resource "aws_lb_target_group_attachment" "web_tg_attachment" {
+  count            = length(aws_instance.webapp_server)
+  target_group_arn = aws_lb_target_group.web_tg.arn
+  target_id        = aws_instance.webapp_server[count.index].id
   port             = 80
 }
 
-# HTTP Listener for WebApp
-resource "aws_lb_listener" "webapp_http" {
-  load_balancer_arn = aws_lb.webapp_alb.arn
+# HTTP Listener
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.alb.arn
   port              = 80
   protocol          = "HTTP"
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.webapp_tg.arn
+    target_group_arn = aws_lb_target_group.web_tg.arn
   }
 }

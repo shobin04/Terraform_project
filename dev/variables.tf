@@ -30,10 +30,10 @@ variable "db_tier_subnet_cidr" {
   type        = string
 }
 
-variable "eks_subnet_cidrs" {
-  description = "eks subnet CIDR values"
-  type        = list(string)
-}
+# variable "eks_subnet_cidrs" {
+#   description = "eks subnet CIDR values"
+#   type        = list(string)
+# }
 
 variable "availability_zones" {
   description = "Availability zone for subnets"
@@ -182,146 +182,20 @@ variable "key_name" {
   type = string
 }
 
-##alb##
-variable "webapp_alb_name" {
-  type = string
-}
+# ##alb##
+# variable "webapp_alb_name" {
+#   type = string
+# }
 
 variable "webapp_alb_sg_name" {
   type = string
 }
 
-variable "mobileapp_alb_name" {
-  type = string
-}
+# variable "mobileapp_alb_name" {
+#   type = string
+# }
 
 
 variable "mobileapp_alb_sg_name" {
   type = string
-}
-
-##eks##
-variable "cluster_name" {
-  description = "Name of the EKS cluster"
-  type        = string
-}
-
-variable "k8s_version" {
-  description = "Kubernetes version for the cluster"
-  type        = string
-}
-
-variable "eks_instance_types" {
-  description = "Instance types for worker nodes"
-  type        = list(string)
-}
-
-variable "desired_capacity" {
-  description = "Desired number of worker nodes"
-  type        = number
-}
-
-variable "max_capacity" {
-  description = "Maximum number of worker nodes"
-  type        = number
-}
-
-variable "min_capacity" {
-  description = "Minimum number of worker nodes"
-  type        = number
-}
-
-variable "tags" {
-  description = "Tags to apply to resources"
-  type        = map(string)
-  default     = {}
-}
-
-variable "cluster_role_name" {
-  description = "Name of the IAM role for EKS cluster"
-  type        = string
-}
-
-variable "node_role_name" {
-  description = "Name of the IAM role for EKS worker nodes"
-  type        = string
-}
-
-variable "eks_sg_name" {
-  type = string
-}
-
-
-##elasticache##
-
-variable "elasticache_subnet_cidr" {
-  description = "ElastiCache subnet CIDR values"
-  type        = string
-}
-
-
-variable "cache_cluster_id" {
-  description = "The ID of the ElastiCache cluster"
-  type        = string
-}
-
-variable "cache_engine" {
-  description = "The engine to use for ElastiCache (e.g., redis or memcached)"
-  type        = string
-}
-
-variable "cache_engine_version" {
-  description = "The version of the ElastiCache engine"
-  type        = string
-}
-
-variable "cache_node_type" {
-  description = "The instance type for ElastiCache nodes"
-  type        = string
-}
-
-variable "cache_node_count" {
-  description = "The number of cache nodes (1 for Redis, multiple for Memcached)"
-  type        = number
-}
-
-variable "cache_sg_id" {
-  description = "The security group ID for ElastiCache"
-  type        = string
-}
-
-variable "cache_port" {
-  description = "The port on which ElastiCache will listen (6379 for Redis, 11211 for Memcached)"
-  type        = number
-}
-
-variable "cache_parameter_group" {
-  description = "The parameter group associated with the cache cluster"
-  type        = string
-}
-
-variable "cache_subnet_group_name" {
-  description = "The name of the ElastiCache subnet group"
-  type        = string
-}
-
-variable "cache_subnet_ids" {
-  description = "List of subnet IDs for the cache cluster"
-  type        = list(string)
-}
-
-variable "cache_name" {
-  description = "Name tag for the cache cluster"
-  type        = string
-}
-
-variable "cache_sg_id" {
-  description = "List of subnet IDs for the cache cluster"
-  type        = string
-}
-
-
-variable "elasticache_sg_name" {
-  description = "List of subnet IDs for the cache cluster"
-  type        = string
 }

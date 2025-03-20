@@ -1,4 +1,4 @@
-resource "aws_lb" "mobileapp_alb" {
+resource "aws_lb" "alb" {
   name               = var.mobileapp_alb_name
   internal           = false
   load_balancer_type = "application"
@@ -37,13 +37,13 @@ resource "aws_lb_target_group" "mobile_tg" {
 resource "aws_lb_target_group_attachment" "mobile_tg_attachment" {
   count            = length(var.mobileapp_instance_ids)
   target_group_arn = aws_lb_target_group.mobile_tg.arn
-  target_id        = var.mobileapp_instance_ids[count.index]
+  target_id        = aws_instance.mobileapp_server[count.index].id
   port             = 80
 }
 
 # HTTP Listener
-resource "aws_lb_listener" "mobileapp_http" {
-  load_balancer_arn = aws_lb.mobileapp_alb.arn
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.alb.arn
   port              = 80
   protocol          = "HTTP"
 
