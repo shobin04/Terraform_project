@@ -25,6 +25,10 @@ variable "mobile_tier_subnet_cidrs" {
   type        = list(string)
 }
 
+variable "redis_subnet_cidrs" {
+  type        = list(string)
+}
+
 variable "db_tier_subnet_cidr" {
   description = "db instance subnet CIDR values"
   type        = string

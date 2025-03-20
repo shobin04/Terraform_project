@@ -70,6 +70,19 @@ resource "aws_subnet" "eks" {
   }
 }
 
+## redis subnets ##
+resource "aws_subnet" "redis" {
+  count      = length(var.availability_zones)
+  vpc_id     = aws_vpc.main.id
+  cidr_block = element(var.redis_subnet_cidrs, count.index)
+
+  map_public_ip_on_launch = false
+  availability_zone       = element(var.availability_zones, count.index)
+  tags = {
+    Name = "redis-subnet-${count.index + 1}"
+  }
+}
+
 ## igw ##
 resource "aws_internet_gateway" "my_igw" {
   vpc_id = aws_vpc.main.id
@@ -143,5 +156,12 @@ resource "aws_route_table_association" "db_tier" {
 resource "aws_route_table_association" "eks" {
   count          = length(aws_subnet.eks)
   subnet_id      = aws_subnet.eks[count.index].id
+  route_table_id = aws_route_table.private_rt.id
+}
+
+## Redis Route Table Association ##
+resource "aws_route_table_association" "redis" {
+  count          = length(aws_subnet.redis)
+  subnet_id      = aws_subnet.redis[count.index].id
   route_table_id = aws_route_table.private_rt.id
 }
